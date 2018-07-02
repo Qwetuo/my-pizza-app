@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser());
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 let pizzas = [
   {
@@ -18,6 +18,10 @@ let pizzas = [
       price: 22
   }
 ];
+
+app.get("/",(req,res) => {
+    res.send("Welcome to the pizza app")
+})
 
 app.get("/pizzas",(req,res) => {
     res.send(pizzas)
