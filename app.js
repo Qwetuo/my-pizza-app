@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const app = express();
 app.use(bodyParser());
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
 let pizzas = [
   {
@@ -20,22 +20,22 @@ let pizzas = [
 ];
 
 app.get("/",(req,res) => {
-    res.send("Welcome to the pizza app")
+    res.json("Welcome to the pizza app")
 })
 
 app.get("/pizzas",(req,res) => {
-    res.send(pizzas)
+    res.json(pizzas)
 })
 
 app.get("/pizzas/:id", (req, res) => {
-    res.send(pizzas.find((pizza)=>{
+    res.json(pizzas.find((pizza)=>{
         return pizza.id === req.params.id
     }))
 })
 
 app.post("/pizzas", (req, res) => {
     pizzas = [...pizzas, req.body]
-    res.send(pizzas)
+    res.json(pizzas)
 })
 
 app.put("/pizzas/:id", (req, res) => {
@@ -44,16 +44,17 @@ app.put("/pizzas/:id", (req, res) => {
     })
     const index = (pizzas.indexOf(pizza))
     pizzas[index] = {...pizzas[index], ...req.body}
-    res.send(pizzas[index])
+    res.json(pizzas[index])
 
 })
 
 app.delete("/pizzas/:id", (req, res) => {
-    pizzas.filter(pizza => pizza.id !== req.params.id)
-    res.send(pizzas)
+    pizzas = pizzas.filter(pizza => pizza.id !== req.params.id)
+    res.json(pizzas)
 })
 
+module.exports = app
 
-const server = app.listen(PORT, function() {
-    console.log(`Server started on port ${PORT}...`)
-})
+// const server = app.listen(PORT, function() {
+//     console.log(`Server started on port ${PORT}...`)
+// })
